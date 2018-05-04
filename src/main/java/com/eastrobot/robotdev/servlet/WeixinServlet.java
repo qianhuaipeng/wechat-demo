@@ -76,6 +76,7 @@ public class WeixinServlet extends HttpServlet {
 		String userId;
 		String robotId;
 		String msgId;
+		String mediaId;
 		IOUtils.copy(req.getInputStream(), bos);
 		String xmlRawInput = new String(bos.toByteArray(), "UTF-8");
 		bui = new SAXBuilder();
@@ -96,11 +97,14 @@ public class WeixinServlet extends HttpServlet {
 			}
 			if (StringUtils.equals("text", msgType)) {
 				String question = root.getChildText("Content");
-				msg = weixinService.sendTextMessage(question, robotId, userId, startTime);
-				logger.info("message：" + msg);
+				//msg = weixinService.sendTextMessage(question, robotId, userId, startTime);
+				msg = weixinService.sendMsg(question,robotId,userId,startTime);
 				print(resp, msg);
+			} else if (StringUtils.equals("image", msgType)){
+				mediaId = root.getChildText("MediaId");
+				msg = weixinService.sendImageMessage(robotId,userId,mediaId);
 			} else if (StringUtils.equals("voice", msgType)){
-				
+
 			} else if (StringUtils.equals("event", msgType)){
 				String event = root.getChildText("Event");
 				String label = root.getChildText("label");
@@ -117,6 +121,8 @@ public class WeixinServlet extends HttpServlet {
 				msg = weixinService.sendLocationMessage(robotId, userId, startTime,location_X,location_Y);
 			}
 			req.getSession().setAttribute(userId, "");
+			logger.info("message：" + msg);
+			print(resp, msg);
 		} catch (JDOMException e) {
 			e.printStackTrace();
 		}

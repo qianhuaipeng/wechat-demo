@@ -37,7 +37,12 @@ public class WeixinUtil {
 		accessTokenExpireCache = new ConcurrentHashMap();
 		msgIdCache = new LRUTCache(500);
 	}
-	
+
+	/**
+	 * 验证消息是否在处理中
+	 * @param msgId
+	 * @return
+	 */
 	public static boolean isMsgProcessing(String msgId) {
         boolean containsKey = msgIdCache.get(msgId) != null;
         if(!containsKey)
@@ -45,6 +50,10 @@ public class WeixinUtil {
         return containsKey;
     }
 
+	/**
+	 * 从缓存中获取token，token失效时间为两个小时
+	 * @return
+	 */
 	public static String getToken() {
 		Long accessTokenExpire = accessTokenExpire();
 		if (accessTokenExpire == null) {
@@ -55,7 +64,11 @@ public class WeixinUtil {
 		}
 		return accessToken();
 	}
-	
+
+	/**
+	 * 从接口里面获取token
+	 * @return
+	 */
 	public static String accessToken(){
 		String url;
         InputStream in = null;
@@ -97,6 +110,13 @@ public class WeixinUtil {
 		return null;
 	}
 
+
+	/**
+	 * 下发普通客服消息，超时五秒未回复调用此方法
+	 * @param openId
+	 * @param msg
+	 * @return
+	 */
 	public static boolean pushTxtMsg(String openId, String msg){
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();

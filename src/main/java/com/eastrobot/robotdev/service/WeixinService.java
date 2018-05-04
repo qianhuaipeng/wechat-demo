@@ -94,6 +94,24 @@ public class WeixinService implements InitializingBean{
 		return msg;
 	}
 
+	public String sendImageMessage(String toUser, String fromUser, String mediaId){
+		Element root = new Element("xml");
+		root.addContent(new Element("ToUserName").addContent(new CDATA(fromUser)));
+		root.addContent(new Element("FromUserName").addContent(new CDATA(toUser)));
+		root.addContent(new Element("CreateTime").setText(createTime()));
+		root.addContent(new Element("MsgType").addContent(new CDATA("image")));
+		root.addContent(new Element("Image").addContent(new Element("MediaId").addContent(new CDATA(mediaId))));
+		Document document = new Document();
+		document.addContent(root);
+		String msg = null;
+		try {
+			msg = XmlStrUtil.doc2String(document);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
 	public String sendLocationMessage(String toUser, String fromUser, long startTime,String locationX,String locationY){
 		//String question = "<Location_X>" +locationX +"</Location_X><Location_Y>"+locationY+"</Location_Y>";
 		String xml = askService.askToXml(fromUser,"",locationX,locationY,"ask_location");
