@@ -1,5 +1,8 @@
 package com.eastrobot.robotdev.service;
 
+import com.eastrobot.robotdev.data.message.domain.RobotMessage;
+import com.eastrobot.robotdev.data.poetry.domain.Poetry;
+import com.eastrobot.robotdev.data.poetry.service.PoetryService;
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -26,7 +29,28 @@ public class WeixinService implements InitializingBean{
 	private static final Logger logger = LoggerFactory.getLogger(WeixinService.class);
 	@Autowired
 	private AskService askService;
-	
+
+	@Autowired
+	private PoetryService poetryService;
+
+	public String sendMsg(String question, String userId, String platform){
+
+
+			Poetry poetry = poetryService.findByTitle(question);
+			if (poetry != null) {
+				RobotMessage robotMessage = new RobotMessage();
+				robotMessage.setType(15);
+				robotMessage.setContent(poetry.getContent());
+				robotMessage.setObject(poetry);
+				return JSONObject.toJSONString(robotMessage);
+			} else {
+				JSONObject jsonObject = askService.askToJson(userId, question, platform);
+				int type = jsonObject.getInteger("type");
+				return jsonObject.toJSONString();
+			}
+
+
+	}
 	
 	public String sendMsg(String question, String toUser, String fromUser, long startTime){
 		String msg = "";
@@ -59,11 +83,6 @@ public class WeixinService implements InitializingBean{
 		String content = jsonObject.getString("content");
 		msg = createTxtMsg(content, toUser, fromUser);
 		long endTime = System.currentTimeMillis();
-//		try {
-//			Thread.sleep(5000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 		if (isTimeout(endTime,startTime)) {
 			TaskPool.getInstance().addTask(new SendWXtxtMsg(content,fromUser));
 			return "";

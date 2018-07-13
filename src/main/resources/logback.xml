@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 日志配置 -->
+<configuration>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoding>UTF-8</encoding>
+		<encoder>
+	      	<pattern>%d[%t][%level][%L]-%logger{10}-%msg%n</pattern>
+	  	</encoder>
+	  	<!-- 
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern><![CDATA[
+			%date{yy-MM-dd HH:mm:ss.SSS}[%t][%level][%L]-%logger{10}-%msg%n
+			]]></pattern>
+		</layout>
+	  	 -->
+	</appender>
+
+
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="stdout"/>
+	</root>
+	
+</configuration>
+

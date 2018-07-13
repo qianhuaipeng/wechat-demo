@@ -37,6 +37,17 @@ public class AskService{
 		String result = HttpUtils.doGet(url, null);
 		logger.info("result:" + result);
 		JSONObject jsonObject = JSONObject.parseObject(result);
+
+		return jsonObject;
+	}
+
+	public JSONObject askToJson(String userId,String question,String platform){
+		String url = new StringBuffer().append(ask_url).append("?userId=" + userId).append("&question=" + question).append("&platform=" + platform).append("&format=json").toString();
+		logger.info("url:" + url);
+		String result = HttpUtils.doGet(url, null);
+		logger.info("result:" + result);
+		JSONObject jsonObject = JSONObject.parseObject(result);
+
 		return jsonObject;
 	}
 

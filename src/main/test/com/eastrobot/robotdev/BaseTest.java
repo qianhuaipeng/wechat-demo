@@ -1,3 +1,5 @@
+package com.eastrobot.robotdev;
+
 import junit.framework.TestCase;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

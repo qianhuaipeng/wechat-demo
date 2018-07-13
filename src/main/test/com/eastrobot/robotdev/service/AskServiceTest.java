@@ -1,4 +1,6 @@
-import com.eastrobot.robotdev.service.AskService;
+package com.eastrobot.robotdev.service;
+
+import com.eastrobot.robotdev.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -6,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author alan.peng
  * @date 2017-12-06 23:42
  */
-public class AskServiceTest extends BaseTest{
+public class AskServiceTest extends BaseTest {
 
     @Autowired
     private AskService askService;

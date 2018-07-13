@@ -1,10 +1,9 @@
-package com.eastrobot.robotdev.servlet;
+package com.eastrobot.robotdev.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -26,7 +24,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.eastrobot.robotdev.service.WeixinService;
 import com.eastrobot.robotdev.utils.WeixinUtil;
-import com.eastrobot.robotdev.utils.XmlStrUtil;
 
 public class WeixinServlet extends HttpServlet {
 	private Logger logger = LoggerFactory.getLogger(WeixinServlet.class); 
@@ -36,7 +33,6 @@ public class WeixinServlet extends HttpServlet {
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
 		super.init(config);
 		 WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 		 weixinService = (WeixinService)context.getBean(WeixinService.class);
@@ -131,11 +127,13 @@ public class WeixinServlet extends HttpServlet {
 	private void print(HttpServletResponse response, String msg) throws IOException{
 		PrintWriter out = response.getWriter();
 		out.write(msg);
+		out.flush();
+		out.close();
 	}
 
 	public static void main(String[] args) {
 		WeixinServlet servlet = new WeixinServlet();
-		//String string = servlet.sendTxtMsg("你好", "1", "2");
+		//String string = controller.sendTxtMsg("你好", "1", "2");
 		//System.out.println(string);
 		
 	}

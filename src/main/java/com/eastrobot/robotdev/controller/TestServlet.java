@@ -1,4 +1,4 @@
-package com.eastrobot.robotdev.servlet;
+package com.eastrobot.robotdev.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
