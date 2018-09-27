@@ -12,6 +12,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eastrobot.robotdev.Constants;
 import com.eastrobot.robotdev.utils.HttpUtils;
 
+import java.util.Map;
+
 @Service
 public class AskService{
 	
@@ -22,7 +24,13 @@ public class AskService{
 	private String brand_;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AskService.class);
-	 
+
+	public JSONObject askToJson(Map params){
+		String result = HttpUtils.getPostContent(ask_url,params,"utf-8");
+		JSONObject jsonObject = JSONObject.parseObject(result);
+		return jsonObject;
+	}
+
 	public String ask(String userId,String question){
 		String url = new StringBuffer().append(ask_url).append("?userId=" + userId).append("&question=" + question).append("&platform=" + Constants.WEIXIN_PLATFORM).append("&format=json").toString();
 		String result = HttpUtils.doGet(url, null);
@@ -76,7 +84,7 @@ public class AskService{
 		question.addElement("Location_Y").setText(locationY);
 		root.addElement("platform").setText("weixin");
 		root.addElement("location").setText("location");
-		root.addElement("brand").setText(brand_);
+		//root.addElement("brand").setText(brand_);
 		String result = HttpUtils.sendRequestBody(ask_url,doc.asXML(),"utf-8");
 		return result;
 	}

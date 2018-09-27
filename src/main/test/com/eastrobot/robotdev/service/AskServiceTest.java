@@ -18,4 +18,9 @@ public class AskServiceTest extends BaseTest {
        String res =  askService.askToXml("test","你好","","ask_text");
         System.out.println(res);
     }
+
+    @Test
+    public void ask(){
+        askService.askToJson("test","图文","weixin");
+    }
 }

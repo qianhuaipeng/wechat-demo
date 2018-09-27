@@ -295,4 +295,9 @@ public class DateUtils{
         }
         return isDate;
     }
+
+    public static long msgId(){
+        long time = System.currentTimeMillis();
+        return time;
+    }
 }

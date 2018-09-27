@@ -3,10 +3,11 @@ package com.eastrobot.robotdev.service;
 import com.eastrobot.robotdev.data.message.domain.RobotMessage;
 import com.eastrobot.robotdev.data.poetry.domain.Poetry;
 import com.eastrobot.robotdev.data.poetry.service.PoetryService;
+import com.eastrobot.robotdev.utils.DateUtils;
+import com.eastrobot.robotdev.utils.MiniProgramUtils;
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,8 @@ import com.eastrobot.robotdev.service.task.TaskPool;
 import com.eastrobot.robotdev.service.task.impl.SendWXtxtMsg;
 import com.eastrobot.robotdev.utils.XmlStrUtil;
 
-import java.io.IOException;
 import java.io.StringReader;
+import java.util.Map;
 
 @Service
 public class WeixinService implements InitializingBean{
@@ -34,22 +35,25 @@ public class WeixinService implements InitializingBean{
 	private PoetryService poetryService;
 
 	public String sendMsg(String question, String userId, String platform){
+		Poetry poetry = poetryService.findByTitle(question);
+		if (poetry != null) {
+			RobotMessage robotMessage = new RobotMessage();
+			robotMessage.setType(15);
+			robotMessage.setContent(poetry.getContent());
+			robotMessage.setObject(poetry);
+			return JSONObject.toJSONString(robotMessage);
+		} else {
+			JSONObject jsonObject = askService.askToJson(userId, question, platform);
+			jsonObject = MiniProgramUtils.convert(jsonObject);
+			return jsonObject.toJSONString();
+		}
+	}
 
-
-			Poetry poetry = poetryService.findByTitle(question);
-			if (poetry != null) {
-				RobotMessage robotMessage = new RobotMessage();
-				robotMessage.setType(15);
-				robotMessage.setContent(poetry.getContent());
-				robotMessage.setObject(poetry);
-				return JSONObject.toJSONString(robotMessage);
-			} else {
-				JSONObject jsonObject = askService.askToJson(userId, question, platform);
-				int type = jsonObject.getInteger("type");
-				return jsonObject.toJSONString();
-			}
-
-
+	public JSONObject ask(Map params){
+		JSONObject jsonObject = askService.askToJson(params);
+		jsonObject.put("msgId", String.valueOf(DateUtils.msgId()));
+		jsonObject = MiniProgramUtils.convert(jsonObject);
+		return jsonObject;
 	}
 	
 	public String sendMsg(String question, String toUser, String fromUser, long startTime){

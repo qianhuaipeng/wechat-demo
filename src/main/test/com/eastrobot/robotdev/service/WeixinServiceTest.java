@@ -17,7 +17,7 @@ public class WeixinServiceTest extends BaseTest {
 
     @Test
     public void sendMsg(){
-        String str = weixinService.sendMsg("葛覃","test","app");
+        String str = weixinService.sendMsg("香格里拉酒店免费延住活动注册渠道","testssssss","weixin");
         System.out.println(str);
     }
 }

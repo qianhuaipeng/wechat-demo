@@ -41,15 +41,15 @@
     <servlet-class>com.eastrobot.robotdev.controller.TestServlet</servlet-class>
   </servlet>
 	
-	<servlet>
-		<servlet-name>AskServlet</servlet-name>
-		<servlet-class>com.eastrobot.robotdev.controller.AskServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>AskServlet</servlet-name>
-		<url-pattern>/ask.do</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>AskServlet</servlet-name>-->
+		<!--<servlet-class>com.eastrobot.robotdev.controller.AskServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!---->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>AskServlet</servlet-name>-->
+		<!--<url-pattern>/ask.do</url-pattern>-->
+	<!--</servlet-mapping>-->
 
 	<servlet-mapping>
 		<servlet-name>WeixinServlet</servlet-name>
