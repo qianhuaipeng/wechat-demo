@@ -1,4 +1,4 @@
-package com.eastrobot.robotdev.data.message.domain;
+package com.eastrobot.robotdev.data.domain;
 
 /**
  * author: alan.peng

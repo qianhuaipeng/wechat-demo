@@ -1,4 +1,4 @@
-package com.eastrobot.robotdev.data.controller;
+package com.eastrobot.robotdev.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eastrobot.robotdev.common.BaseController;
@@ -27,7 +27,9 @@ public class AskController extends BaseController{
 
     @Autowired
     private WeixinService weixinService;
+
     private static final Logger logger = LoggerFactory.getLogger( AskController.class );
+
     @RequestMapping("ask.do")
     public void ask( HttpServletRequest req , HttpServletResponse response){
         String content = null;

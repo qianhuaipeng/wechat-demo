@@ -1,8 +1,5 @@
 package com.eastrobot.robotdev.service;
 
-import com.eastrobot.robotdev.data.message.domain.RobotMessage;
-import com.eastrobot.robotdev.data.poetry.domain.Poetry;
-import com.eastrobot.robotdev.data.poetry.service.PoetryService;
 import com.eastrobot.robotdev.utils.DateUtils;
 import com.eastrobot.robotdev.utils.MiniProgramUtils;
 import org.jdom.CDATA;
@@ -31,22 +28,11 @@ public class WeixinService implements InitializingBean{
 	@Autowired
 	private AskService askService;
 
-	@Autowired
-	private PoetryService poetryService;
 
 	public String sendMsg(String question, String userId, String platform){
-		Poetry poetry = poetryService.findByTitle(question);
-		if (poetry != null) {
-			RobotMessage robotMessage = new RobotMessage();
-			robotMessage.setType(15);
-			robotMessage.setContent(poetry.getContent());
-			robotMessage.setObject(poetry);
-			return JSONObject.toJSONString(robotMessage);
-		} else {
 			JSONObject jsonObject = askService.askToJson(userId, question, platform);
 			jsonObject = MiniProgramUtils.convert(jsonObject);
 			return jsonObject.toJSONString();
-		}
 	}
 
 	public JSONObject ask(Map params){

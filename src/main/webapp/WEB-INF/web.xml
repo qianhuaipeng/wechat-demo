@@ -36,11 +36,7 @@
 		<servlet-name>WeixinServlet</servlet-name>
 		<servlet-class>com.eastrobot.robotdev.controller.WeixinServlet</servlet-class>
 	</servlet>
-  <servlet>
-    <servlet-name>TestServlet</servlet-name>
-    <servlet-class>com.eastrobot.robotdev.controller.TestServlet</servlet-class>
-  </servlet>
-	
+
 	<!--<servlet>-->
 		<!--<servlet-name>AskServlet</servlet-name>-->
 		<!--<servlet-class>com.eastrobot.robotdev.controller.AskServlet</servlet-class>-->
@@ -55,10 +51,6 @@
 		<servlet-name>WeixinServlet</servlet-name>
 		<url-pattern>/weixin</url-pattern>
 	</servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>TestServlet</servlet-name>
-    <url-pattern>/test</url-pattern>
-  </servlet-mapping>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>

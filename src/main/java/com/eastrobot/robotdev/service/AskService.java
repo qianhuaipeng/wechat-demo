@@ -19,6 +19,8 @@ public class AskService{
 	
 	@Value("#{configProperties['ask_url']}")
 	private String ask_url;
+	@Value("#{configProperties['xiaoi_kbs_url']}")
+	private String xiaoi_kbs_url;
 
 	@Value("#{configProperties['brand']}")
 	private String brand_;
@@ -28,6 +30,11 @@ public class AskService{
 	public JSONObject askToJson(Map params){
 		String result = HttpUtils.getPostContent(ask_url,params,"utf-8");
 		JSONObject jsonObject = JSONObject.parseObject(result);
+		if (jsonObject.getInteger("type") != 1) {
+			result = HttpUtils.getContent(xiaoi_kbs_url,params, "utf-8");
+
+		}
+		jsonObject = JSONObject.parseObject(result);
 		return jsonObject;
 	}
 

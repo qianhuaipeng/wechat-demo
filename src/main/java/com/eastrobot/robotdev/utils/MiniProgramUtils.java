@@ -2,8 +2,8 @@ package com.eastrobot.robotdev.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.eastrobot.robotdev.data.message.domain.Faqvote;
-import com.eastrobot.robotdev.data.message.domain.ImageTextMessage;
+import com.eastrobot.robotdev.data.domain.Faqvote;
+import com.eastrobot.robotdev.data.domain.ImageTextMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -80,7 +80,6 @@ public class MiniProgramUtils {
                     if ("imgtxtmsg".equalsIgnoreCase(name)) {
                         jsonObject.put("type", 13);
                         JSONArray argsArray = commandArray.getJSONObject(i).getJSONArray("args");
-                        int size = Integer.parseInt(argsArray.getString(1));
                         String imgtxtmsg = argsArray.getString(3);
                         int end = imgtxtmsg.lastIndexOf("]]>");
                         imgtxtmsg = imgtxtmsg.substring(9, end);
@@ -88,9 +87,8 @@ public class MiniProgramUtils {
                         try {
                             Document document = XmlStrUtil.string2Doc(imgtxtmsg);
                             Element root = document.getRootElement();
-                            size = root.getChildren().size();
                             List<Element> itemList = root.getChildren("item");
-                            List<ImageTextMessage> imageTextMessages = new ArrayList<ImageTextMessage>(size);
+                            List<ImageTextMessage> imageTextMessages = new ArrayList<ImageTextMessage>();
                             for(Element element: itemList){
                                 String title = element.getChildText("Title");
                                 String description = element.getChildText("Description");

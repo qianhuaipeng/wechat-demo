@@ -24,7 +24,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:app.properties</value>
-				<value>classpath:mongodb.properties</value>
 			</list>
 		</property>
 		<property name="ignoreResourceNotFound" value="true"></property>
@@ -32,27 +31,4 @@
 	</bean>
 
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="initialSize" value="1" />
-		<property name="maxActive" value="50" />
-		<property name="maxIdle" value="20" />
-		<property name="minIdle" value="3" />
-		<property name="maxWait" value="30000" />
-		<property name="defaultAutoCommit" value="true" />
-		<property name="validationQuery" value="${jdbc.validationQuery}" />
-		<property name="testOnBorrow" value="true" />
-		<property name="removeAbandoned"><value>true</value></property>
-		<property name="removeAbandonedTimeout"><value>180</value></property>
-		<property name="poolPreparedStatements"><value>false</value></property>
-	</bean>
-
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean>
-
-	<import resource="mongodb.xml"/>
 </beans>
